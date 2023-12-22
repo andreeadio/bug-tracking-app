@@ -7,6 +7,9 @@ app.use(express.json());
 const projectstudent=require('./routes/projectStudentRouter')
 app.use("/projectstudent",projectstudent)
 
+const projectuser=require('./routes/userRouter')
+app.use("/projectuser",projectuser)
+
 db.sequelize.sync().then(()=>{
 //start api
 const port = process.env.PORT || 8080;
