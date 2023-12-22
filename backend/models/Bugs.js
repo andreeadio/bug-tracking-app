@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-    const Bugs = sequelize.define("bugs", {
+    const Bugs = sequelize.define("Bugs", {
         //define the attributes
         // severitate, prioritate, descriere, link commit
         title: {
