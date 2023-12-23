@@ -10,6 +10,9 @@ app.use("/projectstudent", projectStudent)
 const projectUser = require('./routes/userRouter')
 app.use("/projectuser", projectUser)
 
+const bugsRouter = require('./routes/bugRouter')
+app.use("/bugs", bugsRouter)
+
 db.sequelize.sync().then(() => {
     //start api
     const port = process.env.PORT || 8080
