@@ -14,9 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    //severity works like a flag enabled/disabled so it's a boolean
     severity: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
     priority: {
       type: DataTypes.ENUM('Low', 'Medium', 'High'),
