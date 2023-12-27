@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true // Assuming that the commit link may not always be present
     },
+    /*
     projectID: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -60,14 +61,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 'Open'
     }
+    */
   });
 
+  /*
   Bugs.associate = function (models) {
     // associations can be defined here
     Bugs.belongsTo(models.Projects, { foreignKey: 'projectID', as: 'project' });
     Bugs.belongsTo(models.Users, { foreignKey: 'reportedByUserID', as: 'reporter' });
     Bugs.belongsTo(models.Users, { foreignKey: 'assignedToUserID', as: 'assignee' });
   };
-
+  */
   return Bugs;
 };

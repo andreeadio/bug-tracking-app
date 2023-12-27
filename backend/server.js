@@ -3,6 +3,13 @@ const app = express()//aceste 2 linii de cod ne ajuta sa facem request pe api si
 const db = require('./models')//asa creem conexiunea dintre ORM si baza de date din mysql
 app.use(express.json())
 
+
+//routes
+//bug router
+const bugsRouter = require('./routes/bugRouter')
+app.use("/bugs", bugsRouter)
+
+
 db.sequelize.sync().then(() => {
     //start api
     const port = process.env.PORT || 8080
