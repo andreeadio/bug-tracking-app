@@ -1,10 +1,10 @@
-import bcrypt from 'bcrypt';
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import { JWT_KEY } from '../config/const.js';
-import { Users } from '../models/Users.js'; // Adjust based on your actual Users model path and name
-import { createUser, getUserByEmailAndCheckPassword } from '../models/user.js'; // Ensure these functions exist and are imported correctly
-
+//import bcrypt from 'bcrypt';
+//import express from 'express';
+// import jwt from 'jsonwebtoken';
+// import { JWT_KEY } from '../config/const.js';
+// import { Users } from '../models/Users.js'; // Adjust based on your actual Users model path and name
+// import { createUser, getUserByEmailAndCheckPassword } from '../models/user.js'; // Ensure these functions exist and are imported correctly
+const express = require('express');
 const accountRoutes = express.Router();
 
 // Team Member login route
@@ -76,6 +76,6 @@ function generateToken(user) {
 			expiresIn: '24h',
 		}
 	);
-}
+} 
 
-export default accountRoutes;
+module.exports=accountRoutes;

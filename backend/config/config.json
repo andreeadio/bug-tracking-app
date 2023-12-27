@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "@webtech2023",
-    "database": "bugtrackdb",
+    "password": "picaciupicaciu1A.",
+    "database": "projectstudents",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
