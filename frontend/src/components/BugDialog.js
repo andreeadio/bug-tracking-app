@@ -3,6 +3,7 @@ import "primereact/resources/primereact.min.css" //core css
 import { Dialog } from 'primereact/dialog';
 import BugAddForm from "./BugAddForm";
 //dialog
+//pop up dialog which opens a form for adding a new bug (the form is in BugAddForm)
 const BugDialog = ({ visible, onHide, onBugAdded }) => {
     return (
         <Dialog
