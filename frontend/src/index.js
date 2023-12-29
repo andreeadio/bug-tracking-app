@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import BugList from './components/BugList'
 import LoginForm from './components/LoginForm';
-
+import Register from './components/Register';
 import {
   createBrowserRouter, RouterProvider,
 } from 'react-router-dom';
@@ -18,6 +18,10 @@ const router = createBrowserRouter([
     path: "/bugs",
     element: <BugList />
   },
+  {
+    path:"/register",
+    element:<Register/>
+  }
 ])
 
 
