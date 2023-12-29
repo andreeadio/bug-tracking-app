@@ -9,6 +9,7 @@ import BugPage from './components/BugPage'
 import LoginForm from './components/LoginForm';
 import BugDataTable from './components/BugDataTable';
 
+import Register from './components/Register';
 import {
   createBrowserRouter, RouterProvider,
 } from 'react-router-dom';
@@ -22,7 +23,10 @@ const router = createBrowserRouter([
     path: "/bugs",
     element: <BugPage />
   },
-
+  {
+    path: "/register",
+    element: <Register />
+  }
 ])
 
 
