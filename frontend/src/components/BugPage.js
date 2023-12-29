@@ -10,6 +10,7 @@ import { SERVER } from '../config/global'
 
 import BugAddForm from "./BugAddForm"
 import BugDialog from "./BugDialog"
+import BugDataTable from "./BugDataTable"
 
 
 const BugList = () => {
@@ -27,8 +28,6 @@ const BugList = () => {
     };
 
     useEffect(() => {
-
-
         fetchBugs();
     }, []); // Empty dependency array ensures that this effect runs once on component mount
 
@@ -41,11 +40,9 @@ const BugList = () => {
 
     return (
         <div className="bug-list-container" style={{ padding: "80px", display: 'grid' }}>
-            <h1>Bug List</h1>
-
+            <h1>Project Dashboard</h1>
 
             <Button label="Add New Bug" onClick={() => setDialogVisible(true)} />
-
 
             <BugDialog
                 visible={dialogVisible}
@@ -56,26 +53,9 @@ const BugList = () => {
                 }}
             />
 
+            <BugDataTable bugs={bugs} />
 
-            {Object.keys(bugsByStatus).map((status) => (
-                <div key={status} className={`status-card ${status.toLowerCase()}-card`}>
-                    <h2>{status}</h2>
-                    <ul>
-                        {bugsByStatus[status].map((bug) => (
-                            <li
-                                key={bug.bugID}
-                                className={`bug-card ${bug.severity ? 'severity-true' : ''}`}
-                            >
-                                <strong className="bug-title">{bug.title}</strong>
-                                <p className="bug-description">{bug.description}</p>
-                                <p>Severity: {bug.severity ? 'High' : 'Low'}</p>
-                                <p>Priority: {bug.priority}</p>
-                                {/* Add more bug details as needed */}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+
         </div>
     );
 };

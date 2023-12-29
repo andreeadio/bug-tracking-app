@@ -1,9 +1,13 @@
+import "primereact/resources/themes/lara-dark-pink/theme.css" //theme
+import "primereact/resources/primereact.min.css" //core css
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import BugList from './components/BugList'
+import BugPage from './components/BugPage'
 import LoginForm from './components/LoginForm';
+import BugDataTable from './components/BugDataTable';
 
 import {
   createBrowserRouter, RouterProvider,
@@ -16,8 +20,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/bugs",
-    element: <BugList />
+    element: <BugPage />
   },
+
 ])
 
 
