@@ -1,4 +1,3 @@
 
 //server url
-int port = 8080
-export const SERVER = `http://localhost:${port}`
+export const SERVER = `http://localhost:8080`
