@@ -2,20 +2,20 @@ import "primereact/resources/themes/lara-dark-pink/theme.css" //theme
 import "primereact/resources/primereact.min.css" //core css
 
 import './LoginForm.css'
-import { useHistory } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card'
 import React from "react"
 
 const LoginForm = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         //TODO: Handle form submission logic here
     }
     const handleRegisterClick = () => {
-        history.push('/register'); // Folosește history.push pentru a naviga
+        navigate.push('/register'); // Folosește history.push pentru a naviga
     };
     // Stilurile pentru centrarea containerului
     const centerStyle = {
