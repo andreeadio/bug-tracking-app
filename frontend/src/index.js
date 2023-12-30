@@ -9,8 +9,10 @@ import App from './App';
 import BugPage from './components/BugPage'
 import LoginForm from './components/LoginForm';
 import BugDataTable from './components/BugDataTable';
-
 import Register from './components/Register';
+import MemberProjectPage from "./components/MemberProjectPage";
+import TesterProjectPage from "./components/TesterProjectPage";
+
 import {
   createBrowserRouter, RouterProvider,
 } from 'react-router-dom';
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />
+  },
+  {
+    path:"/projectsMember",
+    element:<MemberProjectPage />
+  },
+  {
+    path:"/projectsTester",
+    element:<TesterProjectPage />
   }
 ])
 
