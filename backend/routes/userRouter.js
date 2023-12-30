@@ -30,10 +30,11 @@ router.get('/:userId', async (req, res) => {
 });
 
 // Create a new user
+// Create a new user
 router.post('/', async (req, res) => {
-  const { email, role, password } = req.body;
+  const { username, email, role, password } = req.body; // Include username in the destructured assignment
   try {
-    const newUser = await Users.create({ email, role, password });
+    const newUser = await Users.create({ username, email, role, password }); // Include username when creating a user
     res.json(newUser);
   } catch (error) {
     console.error(error);
@@ -41,14 +42,16 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+// Update a user by ID
 // Update a user by ID
 router.put('/:userId', async (req, res) => {
   const userId = req.params.userId;
-  const { email, role, password } = req.body;
+  const { username, email, role, password } = req.body; // Include username in the destructured assignment
   try {
     const user = await Users.findByPk(userId);
     if (user) {
-      await user.update({ email, role, password });
+      await user.update({ username, email, role, password }); // Include username in the update
       res.json(user);
     } else {
       res.status(404).json({ error: 'User not found' });
@@ -58,6 +61,7 @@ router.put('/:userId', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 // Delete a user by ID
 router.delete('/:userId', async (req, res) => {
