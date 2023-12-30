@@ -30,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true // Assuming that the commit link may not always be present
     },
+    status: {
+      type: DataTypes.ENUM,
+      values: ['Open', 'In Progress', 'Implemented', 'Verified'],
+      defaultValue: 'Open',
+      allowNull: false
+    },
     /*
     projectID: {
       type: DataTypes.INTEGER,
@@ -55,12 +61,6 @@ module.exports = (sequelize, DataTypes) => {
         key: 'userID'
       }
     },
-    status: {
-      type: DataTypes.ENUM,
-      values: ['Open', 'Closed', 'Resolved', 'In Progress', 'Verified'],
-      allowNull: false,
-      defaultValue: 'Open'
-    }
     */
   });
 

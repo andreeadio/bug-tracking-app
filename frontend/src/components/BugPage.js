@@ -1,7 +1,7 @@
 import "primereact/resources/themes/lara-dark-pink/theme.css" //theme
 import "primereact/resources/primereact.min.css" //core css
 import { Button } from 'primereact/button'
-
+import { Tag } from "primereact/tag"
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 //import './BugList.css'; // Import the CSS file
@@ -10,6 +10,7 @@ import { SERVER } from '../config/global'
 
 import BugAddForm from "./BugAddForm"
 import BugDialog from "./BugDialog"
+import BugDataTable from "./BugDataTable"
 
 
 const BugList = () => {
@@ -27,25 +28,51 @@ const BugList = () => {
     };
 
     useEffect(() => {
-
-
         fetchBugs();
     }, []); // Empty dependency array ensures that this effect runs once on component mount
 
-    // Organize bugs by status
-    const bugsByStatus = bugs.reduce((acc, bug) => {
-        acc[bug.status] = acc[bug.status] || [];
-        acc[bug.status].push(bug);
-        return acc;
-    }, {});
+    const handleDeleteBug = async (bugID) => {
+
+        try {
+            //make the post request
+            await axios.delete(`${SERVER}/bugs/${bugID}`);
+            setBugs(bugs.filter((bug) => bug.bugID !== bugID));
+
+            //display message
+            window.alert('Bug successfully deleted!');
+        } catch (error) {
+            console.error('Error: cannot delete bug', error);
+            window.alert('Error: cannot delete bug');
+
+        }
+    }
+
+    const statusBodyTemplate = (bug) => {
+        return <Tag value={bug.status} severity={getSeverity(bug)}></Tag>;
+    };
+    const getSeverity = (bug) => {
+        switch (bug.status) {
+            case 'Verified':
+                return 'success';
+
+            case 'In Progress':
+                return 'warning';
+
+            case 'Implemented':
+                return 'info';
+
+            case 'Open':
+                return 'danger';
+            default:
+                return null;
+        }
+    };
 
     return (
         <div className="bug-list-container" style={{ padding: "80px", display: 'grid' }}>
-            <h1>Bug List</h1>
-
+            <h1>Project Dashboard</h1>
 
             <Button label="Add New Bug" onClick={() => setDialogVisible(true)} />
-
 
             <BugDialog
                 visible={dialogVisible}
@@ -56,26 +83,7 @@ const BugList = () => {
                 }}
             />
 
-
-            {Object.keys(bugsByStatus).map((status) => (
-                <div key={status} className={`status-card ${status.toLowerCase()}-card`}>
-                    <h2>{status}</h2>
-                    <ul>
-                        {bugsByStatus[status].map((bug) => (
-                            <li
-                                key={bug.bugID}
-                                className={`bug-card ${bug.severity ? 'severity-true' : ''}`}
-                            >
-                                <strong className="bug-title">{bug.title}</strong>
-                                <p className="bug-description">{bug.description}</p>
-                                <p>Severity: {bug.severity ? 'High' : 'Low'}</p>
-                                <p>Priority: {bug.priority}</p>
-                                {/* Add more bug details as needed */}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+            <BugDataTable bugs={bugs} onDelete={handleDeleteBug} statusBodyTemplate={statusBodyTemplate} />
         </div>
     );
 };

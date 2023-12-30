@@ -1,10 +1,18 @@
+import "primereact/resources/themes/lara-dark-pink/theme.css" //theme
+import "primereact/resources/primereact.min.css" //core css
+import 'primeicons/primeicons.css'; //import icons
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import BugList from './components/BugList'
+import BugPage from './components/BugPage'
 import LoginForm from './components/LoginForm';
+import BugDataTable from './components/BugDataTable';
 import Register from './components/Register';
+import MemberProjectPage from "./components/MemberProjectPage";
+import TesterProjectPage from "./components/TesterProjectPage";
+
 import {
   createBrowserRouter, RouterProvider,
 } from 'react-router-dom';
@@ -16,11 +24,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/bugs",
-    element: <BugList />
+    element: <BugPage />
   },
   {
-    path:"/register",
-    element:<Register/>
+    path: "/register",
+    element: <Register />
+  },
+  {
+    path:"/projectsMember",
+    element:<MemberProjectPage />
+  },
+  {
+    path:"/projectsTester",
+    element:<TesterProjectPage />
   }
 ])
 
