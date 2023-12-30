@@ -59,7 +59,7 @@ router.delete('/:id', async (req, res) => {
         //deleting the bug from the database
         await Bugs.destroy({
             where: {
-                id: bugId
+                bugID: bugId
             }
         })
 
@@ -71,4 +71,5 @@ router.delete('/:id', async (req, res) => {
 })
 
 //TODO: PUT
+
 module.exports = router

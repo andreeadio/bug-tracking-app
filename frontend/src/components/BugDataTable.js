@@ -3,8 +3,9 @@ import React from 'react';
 
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
 
-const BugDataTable = ({ bugs }) => {
+const BugDataTable = ({ bugs, onEdit, onDelete }) => {
 
     //datatable for bugs, can be sorted by id, severity or priority
     return (
@@ -19,6 +20,25 @@ const BugDataTable = ({ bugs }) => {
                 <Column field="severity" header="Severity" sortable />
                 <Column field="priority" header="Priority" sortable />
                 <Column field="commitLink" header="Commit Link" />
+                <Column
+                    header="Actions"
+                    body={(rowData) => (
+                        <div>
+                            {/* Edit Button */}
+                            <Button
+                                icon="pi pi-pencil"
+                                className="p-button-rounded p-button-success"
+                                onClick={() => onEdit(rowData)}
+                            />
+                            {/* Delete Button */}
+                            <Button
+                                icon="pi pi-trash"
+                                className="p-button-rounded p-button-danger"
+                                onClick={() => onDelete(rowData.bugID)}
+                            />
+                        </div>
+                    )}
+                />
             </DataTable>
         </div>
     );

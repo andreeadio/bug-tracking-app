@@ -31,12 +31,21 @@ const BugList = () => {
         fetchBugs();
     }, []); // Empty dependency array ensures that this effect runs once on component mount
 
-    // Organize bugs by status
-    const bugsByStatus = bugs.reduce((acc, bug) => {
-        acc[bug.status] = acc[bug.status] || [];
-        acc[bug.status].push(bug);
-        return acc;
-    }, {});
+    const handleDeleteBug = async (bugID) => {
+
+        try {
+            //make the post request
+            await axios.delete(`${SERVER}/bugs/${bugID}`);
+            setBugs(bugs.filter((bug) => bug.bugID !== bugID));
+
+            //display message
+            window.alert('Bug successfully deleted!');
+        } catch (error) {
+            console.error('Error: cannot delete bug', error);
+            window.alert('Error: cannot delete bug');
+
+        }
+    }
 
     return (
         <div className="bug-list-container" style={{ padding: "80px", display: 'grid' }}>
@@ -53,9 +62,7 @@ const BugList = () => {
                 }}
             />
 
-            <BugDataTable bugs={bugs} />
-
-
+            <BugDataTable bugs={bugs} onDelete={handleDeleteBug} />
         </div>
     );
 };
