@@ -1,7 +1,7 @@
 import "primereact/resources/themes/lara-dark-pink/theme.css" //theme
 import "primereact/resources/primereact.min.css" //core css
 import { Button } from 'primereact/button'
-
+import { Tag } from "primereact/tag"
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 //import './BugList.css'; // Import the CSS file
@@ -47,6 +47,27 @@ const BugList = () => {
         }
     }
 
+    const statusBodyTemplate = (bug) => {
+        return <Tag value={bug.status} severity={getSeverity(bug)}></Tag>;
+    };
+    const getSeverity = (bug) => {
+        switch (bug.status) {
+            case 'Verified':
+                return 'success';
+
+            case 'In Progress':
+                return 'warning';
+
+            case 'Implemented':
+                return 'info';
+
+            case 'Open':
+                return 'danger';
+            default:
+                return null;
+        }
+    };
+
     return (
         <div className="bug-list-container" style={{ padding: "80px", display: 'grid' }}>
             <h1>Project Dashboard</h1>
@@ -62,7 +83,7 @@ const BugList = () => {
                 }}
             />
 
-            <BugDataTable bugs={bugs} onDelete={handleDeleteBug} />
+            <BugDataTable bugs={bugs} onDelete={handleDeleteBug} statusBodyTemplate={statusBodyTemplate} />
         </div>
     );
 };

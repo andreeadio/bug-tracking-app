@@ -5,7 +5,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 
-const BugDataTable = ({ bugs, onEdit, onDelete }) => {
+const BugDataTable = ({ bugs, onEdit, onDelete, statusBodyTemplate }) => {
+
 
     //datatable for bugs, can be sorted by id, severity or priority
     return (
@@ -20,6 +21,7 @@ const BugDataTable = ({ bugs, onEdit, onDelete }) => {
                 <Column field="severity" header="Severity" sortable />
                 <Column field="priority" header="Priority" sortable />
                 <Column field="commitLink" header="Commit Link" />
+                <Column field="status" header="Status " body={statusBodyTemplate} />
                 <Column
                     header="Actions"
                     body={(rowData) => (
