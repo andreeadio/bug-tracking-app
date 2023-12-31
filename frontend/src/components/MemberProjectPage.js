@@ -49,6 +49,16 @@ const MemberProjectPage = () => {
 
       <div className="add-project-button">
         <Button label="Add New Project" icon="pi pi-plus" onClick={handleAddProject} />
+
+        <BugDialog
+                visible={dialogVisible}
+                onHide={() => setDialogVisible(false)}
+                onProjectsAdded={() => {
+                    setDialogVisible(false);
+                    fetchBugs(); // Fetch updated bugs after adding a new bug
+                }}
+            />
+
       </div>
     </div>
   );
