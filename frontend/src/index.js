@@ -12,7 +12,7 @@ import BugDataTable from './components/BugDataTable';
 import Register from './components/Register';
 import MemberProjectPage from "./components/MemberProjectPage";
 import TesterProjectPage from "./components/TesterProjectPage";
-
+import ChoseMembership from "./components/ChoseMembership";
 import {
   createBrowserRouter, RouterProvider,
 } from 'react-router-dom';
@@ -37,6 +37,10 @@ const router = createBrowserRouter([
   {
     path:"/projectsTester",
     element:<TesterProjectPage />
+  },
+  {
+    path:"/chosemembership",
+    element:<ChoseMembership/>
   }
 ])
 

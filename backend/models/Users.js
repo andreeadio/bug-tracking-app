@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       unique:true,
     },
     role: {
-      type: DataTypes.ENUM('MP', 'TST'),
+      type: DataTypes.ENUM('MP', 'TST','BASIC'),
       allowNull: true,
     },
     password: {

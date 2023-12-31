@@ -1,13 +1,94 @@
-body {
+body, html {
+  height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #20232a; /* O culoare de fundal întunecată pentru contrast */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Stilurile pentru .register-container */
+.register-container {
+  width: 100%;
+  max-width: 400px; /* sau orice lățime preferi */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efect de umbrire pentru plutire */
+  border-radius: 10px;
+  background-color: #fff; /* Fundal alb pentru formular */
+  display: flex;
+  flex-direction: column;
+  /* Poziționare absolută pentru centrare precisă */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-title {
+  color: #000;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  color: #000;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  /* Change the border color for focus */
+  transition: border-color 0.3s;
+}
+
+.form-field input:focus {
+  border-color: #f06292; /* A shade of pink */
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f06292; /* Pink */
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #e91e63; /* A darker shade of pink */
+}
+
+
+/* Stilurile containerului care deține butoanele */
+.buttons-container {
+  display: flex; /* Folosește Flexbox pentru aranjare */
+  gap: 20px; /* Spațiu între butoane */
+}
+
+/* Stilurile butoanelor */
+.styled-button {
+  padding: 20px 40px; /* Mărimea butoanelor */
+  font-size: 18px; /* Mărimea textului */
+  color: white; /* Culoarea textului */
+  background-color: #f06292; /* Culoare de fundal - albastru */
+  border: none; /* Fără bordură */
+  border-radius: 5px; /* Margini rotunjite */
+  cursor: pointer; /* Cursor mână când ești peste buton */
+  transition: background-color 0.3s; /* Tranziție pentru hover */
+}
+
+.styled-button:hover {
+  background-color: #e91e63; /* Schimbă culoarea la hover - albastru mai închis */
 }
