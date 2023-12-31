@@ -49,6 +49,7 @@ const MemberProjectPage = () => {
 
       <div className="add-project-button">
         <Button label="Add New Project" icon="pi pi-plus" onClick={handleAddProject} />
+
       </div>
     </div>
   );
