@@ -9,6 +9,7 @@ const RegisterForm = () => {
         password: '',
         repeatPassword: '',
     });
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -21,14 +22,37 @@ const RegisterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
         if (formData.password !== formData.repeatPassword) {
             alert("Passwords don't match!");
             return;
         }
-        // Implement your submit logic here
-        console.log('Form data submitted', formData);
+        try {
+            const response = await fetch('http://localhost:8080/users/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password, // În practică, ar trebui hashuită în backend
+                    // Nu trimite 'repeatPassword', nu este necesar pentru backend
+                }),
+            });
 
-        // navigate('/login'); // or wherever you need to redirect to after registration
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('User registered:', data);
+                navigate('/chosemembership');
+            } else {
+                setError(data.message || "Failed to register");
+            }
+        } catch (error) {
+            setError("Failed to connect to the server");
+            console.error('Registration error:', error);
+        }
     };
 
     return (
@@ -79,6 +103,7 @@ const RegisterForm = () => {
                         required
                     />
                 </div>
+                {error && <p style={{ color: 'red' }}>{error}</p>} {/* Afișează mesajele de eroare aici */}
                 <button type="submit" className="submit-btn">Register</button>
             </form>
         </div>

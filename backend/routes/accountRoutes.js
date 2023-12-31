@@ -4,12 +4,11 @@
 // import { JWT_KEY } from '../config/const.js';
 // import { Users } from '../models/Users.js'; // Adjust based on your actual Users model path and name
 // import { createUser, getUserByEmailAndCheckPassword } from '../models/user.js'; // Ensure these functions exist and are imported correctly
+const express = require('express');
 const router = express.Router();
 const { Users } = require('../models'); // Ajustează calea după caz
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const JWT_KEY = "MySuperSecretKey12345!@#$%^&*()"; 
-const express = require('express');
+const bcrypt = require('bcryptjs');
 const accountRoutes = express.Router();
 
 // Team Member login route
