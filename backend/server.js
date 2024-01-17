@@ -9,7 +9,7 @@ app.use(cors())
 
 //routes
 //user route
-const userRouter=require('./routes/userRouter')
+const userRouter = require('./routes/userRouter')
 app.use("/users", userRouter)
 
 //account route
@@ -17,11 +17,11 @@ const accountRoutes = require('./routes/accountRoutes')
 app.use("/auth", accountRoutes)
 
 //team route
-const teamRouter=require('./routes/teamRouter')
-app.use("/teams", teamRouter)
+// const teamRouter=require('./routes/teamRouter')
+// app.use("/teams", teamRouter)
 
 //project route
-const projectRouter=require('./routes/projectRouter')
+const projectRouter = require('./routes/projectRouter')
 app.use("/projects", projectRouter)
 
 //bug router

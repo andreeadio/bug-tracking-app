@@ -5,7 +5,7 @@ const { Projects, Teams } = require('../models'); // Adjust the path as needed
 // Get all projects
 router.get('/', async (req, res) => {
   try {
-    const projects = await Projects.findAll({ include: [{ model: Teams, as: 'team' }] });
+    const projects = await Projects.findAll();
     res.json(projects);
   } catch (error) {
     console.error(error);
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 router.get('/:projectId', async (req, res) => {
   const projectId = req.params.projectId;
   try {
-    const project = await Projects.findByPk(projectId, { include: [{ model: Teams, as: 'team' }] });
+    const project = await Projects.findByPk(projectId);
     if (project) {
       res.json(project);
     } else {
@@ -31,9 +31,9 @@ router.get('/:projectId', async (req, res) => {
 
 // Create a new project
 router.post('/', async (req, res) => {
-  const { repositoryLink, teamID } = req.body;
+  const { projectName, repositoryLink, teamName } = req.body;
   try {
-    const newProject = await Projects.create({ repositoryLink, teamID });
+    const newProject = await Projects.create({ projectName, repositoryLink, teamName });
     res.json(newProject);
   } catch (error) {
     console.error(error);
@@ -48,7 +48,7 @@ router.put('/:projectId', async (req, res) => {
   try {
     const project = await Projects.findByPk(projectId);
     if (project) {
-      await project.update({ repositoryLink, teamID });
+      await project.update({ projectName, repositoryLink, teamName });
       res.json(project);
     } else {
       res.status(404).json({ error: 'Project not found' });
