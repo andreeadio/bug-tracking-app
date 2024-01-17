@@ -4,7 +4,7 @@ import "primereact/resources/primereact.min.css" //core css
 
 import { useState } from "react";
 import axios from "axios";
-import { SERVER } from '../config/global';
+import { SERVER } from '../../config/global';
 
 
 //import primereact components

@@ -5,7 +5,7 @@ import { Tag } from "primereact/tag"
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 //import './BugList.css'; // Import the CSS file
-import { SERVER } from '../config/global'
+import { SERVER } from '../../config/global'
 //import AddBugForm from '../Bug/Bug';
 
 import BugAddForm from "./BugAddForm"

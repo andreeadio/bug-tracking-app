@@ -6,9 +6,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import BugPage from './components/BugPage'
+import BugPage from './components/Bugs/BugPage'
 import LoginForm from './components/LoginForm';
-import BugDataTable from './components/BugDataTable';
+import BugDataTable from './components/Bugs/BugDataTable';
 import Register from './components/Register';
 import MemberProjectPage from "./components/MemberProjectPage";
 import TesterProjectPage from "./components/TesterProjectPage";
@@ -31,16 +31,16 @@ const router = createBrowserRouter([
     element: <Register />
   },
   {
-    path:"/projectsMember",
-    element:<MemberProjectPage />
+    path: "/projectsMember",
+    element: <MemberProjectPage />
   },
   {
-    path:"/projectsTester",
-    element:<TesterProjectPage />
+    path: "/projectsTester",
+    element: <TesterProjectPage />
   },
   {
-    path:"/chosemembership",
-    element:<ChoseMembership/>
+    path: "/chosemembership",
+    element: <ChoseMembership />
   }
 ])
 
