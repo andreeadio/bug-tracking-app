@@ -1,14 +1,17 @@
+
+
 import "primereact/resources/themes/lara-dark-pink/theme.css" //theme
 import "primereact/resources/primereact.min.css" //core css
-
+import 'primeicons/primeicons.css';
 
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './ProjectList.css'
 import { Button } from 'primereact/button';
-import { InputText } from "primereact/inputtext";
 import { Card } from 'primereact/card';
+import { Carousel } from 'primereact/carousel';
+import { InputText } from "primereact/inputtext";
 import { ListBox } from 'primereact/listbox';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -17,11 +20,10 @@ import { SERVER } from '../config/global';
 import ProjectDialog from './ProjectDialog';
 
 const ProjectListMP = () => {
-
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [showProjectDialog, setShowProjectDialog] = useState(false);
-
 
   const fetchProjects = async () => {
     try {
@@ -37,12 +39,15 @@ const ProjectListMP = () => {
   }, []);
 
   const handleAddProject = () => {
-
     setShowProjectDialog(true);
   };
 
-  const handleProjectDialogHide = () => {
+  const handleProjectClick = (projectId) => {
 
+    navigate(`/mp/bugs/${projectId}`)
+  };
+
+  const handleProjectDialogHide = () => {
     setShowProjectDialog(false);
   };
 
@@ -51,65 +56,66 @@ const ProjectListMP = () => {
       project.repositoryLink.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  const projectTemplate = (project) => (
+    <Card
+      title={project.projectName}
+      style={{ width: '300px', margin: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}
+      onClick={() => handleProjectClick(project.projectID)}
+    >
+      <div>
+        <i className="pi pi-folder" style={{ marginRight: '8px' }}></i>
+        <strong>Project Name:</strong> {project.projectName}
+      </div>
+      <div>
+        <strong>Team Name:</strong> {project.teamName}
+      </div>
+      <div>
+        <strong>Repository Name:</strong> {project.repositoryName}
+      </div>
+    </Card>
+  );
+
   return (
     <div className="project-page">
-      <div className="team-member-projects" >
-        <Card>
-          <h2>List of Projects</h2>
-          <InputText
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Search by Repository Link"
-          />
-          <ListBox
-            options={filteredProjects}
-            optionLabel="repositoryLink"
-            filter
-            filterPlaceholder="Search projects..."
-            itemTemplate={(project) => (
-              // Use Link to navigate to /bugs when an item is clicked
-              <Link to={`/mp/bugs/${project.projectID}`}>
-                <div>{project.repositoryLink}</div>
-              </Link>
-            )}
-          />
-        </Card>
+
+      <h2>List of Projects</h2>
+      <div className="p-inputgroup flex-1">
+        <span className="p-inputgroup-addon">
+          <i className="pi pi-search"></i>
+        </span>
+        <InputText
+          placeholder="Search projects..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+      </div>
+      <div className="team-member-projects">
+        <Carousel
+          value={filteredProjects}
+          itemTemplate={projectTemplate}
+          numVisible={3}
+          numScroll={1}
+          responsiveOptions={[
+            {
+              breakpoint: '1024px',
+              numVisible: 2,
+              numScroll: 1,
+            },
+            {
+              breakpoint: '768px',
+              numVisible: 1,
+              numScroll: 1,
+            },
+          ]}
+        />
       </div>
 
       <div className="add-project-button">
         <Button label="Add New Project" icon="pi pi-plus" onClick={handleAddProject} />
         <ProjectDialog visible={showProjectDialog} onHide={handleProjectDialogHide} onProjectAdded={fetchProjects} />
       </div>
-
-
-
     </div>
   );
 };
 
 export default ProjectListMP;
-
-/* <div className="datatable-responsive">
-        <DataTable value={projects}
-          paginator
-          rows={5}
-          rowsPerPageOptions={[5, 10, 20]}>
-          <Column field="projectName" header="Project Name" sortable />
-          <Column field="teamName" header="Team Name" />
-
-          <Column
-            header="Actions"
-            body={(rowData) => (
-              <div>
-               
-                <Button
-                  icon="pi pi-pencil"
-                  className="p-button-rounded p-button-success"
-
-                />
-              </div>
-            )}
-          />
-        </DataTable>
-      </div> 
-    */
