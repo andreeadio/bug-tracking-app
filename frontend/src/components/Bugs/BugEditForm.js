@@ -30,7 +30,7 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
 
 
 
-    const handleSubmit = async (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
 
         try {
@@ -48,7 +48,10 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
 
         }
     }
-
+    const handleStatusChange = (e) => {
+        setSelectedStatus(e.value);
+        setEditedBug((prevBug) => ({ ...prevBug, status: e.value }));
+    };
 
     const priorityOptions = [
         { label: 'Low', value: 'Low' },
@@ -99,6 +102,15 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
                             disabled
                         />
                     </div>
+                    <div className="p-field">
+                        <label>Status</label>
+                        <Dropdown
+                            value={selectedStatus}
+                            options={statusOptions}
+                            placeholder="Select Status"
+                            onChange={handleStatusChange}
+                        />
+                    </div>
 
                     <div className="p-field">
                         <label htmlFor="commitLink">Commit Link</label>
@@ -117,7 +129,9 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
                     </div>
                 </div>
 
-                <Button type="submit" label="Submit" onClick={handleSubmit} />
+                <Button type="button" label="Update" onClick={handleUpdate} />
+                <Button type="button" label="Cancel" onClick={onClose} className="p-button-secondary" />
+
             </form>
         </div>
     )

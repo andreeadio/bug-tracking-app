@@ -19,6 +19,17 @@ const BugList = () => {
     const { projectID } = useParams();
     const [bugs, setBugs] = useState([]);
     const [dialogVisible, setDialogVisible] = useState(false);
+    const [editDialogVisible, setEditDialogVisible] = useState(false);
+    const [selectedBug, setSelectedBug] = useState(null);
+
+    const handleEditBug = (bug) => {
+        setSelectedBug(bug);
+        setEditDialogVisible(true);
+    };
+
+    const handleEditDialogHide = () => {
+        setEditDialogVisible(false);
+    };
 
     // Fetch the list of bugs from your server
     const fetchBugs = async () => {
