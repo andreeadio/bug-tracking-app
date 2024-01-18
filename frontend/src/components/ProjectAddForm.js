@@ -54,7 +54,7 @@ const ProjectAddForm = ({ onProjectAdded }) => {
                             name="projectName"
                             value={project.projectName}
                             onChange={handleChange}
-                            require
+                            required
                         />
                     </div>
 

@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'projectID'
       }
     },
-    reportedByUserID: {
+    reportedByUser: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true, // Assuming it's possible for a bug to not be assigned immediately
       references: {
         model: 'Users',
-        key: 'username'
+        key: 'userID'
       }
     },
 
@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
   Bugs.associate = function (models) {
     // associations can be defined here
     Bugs.belongsTo(models.Projects, { foreignKey: 'projectID', as: 'project' });
-    Bugs.belongsTo(models.Users, { foreignKey: 'reportedByUserID', as: 'reporter' });
+    Bugs.belongsTo(models.Users, { foreignKey: 'reportedByUser', as: 'reporter' });
     Bugs.belongsTo(models.Users, { foreignKey: 'assignedToUser', as: 'assignee' });
   };
 

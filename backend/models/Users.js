@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Users.associate = function (models) {
-    Users.hasMany(models.Bugs, { foreignKey: 'reportedByUserID', as: 'reportedBugs' });
-    Users.hasMany(models.Bugs, { foreignKey: 'assignedToUserID', as: 'assignedBugs' });
+    Users.hasMany(models.Bugs, { foreignKey: 'reportedByUser', as: 'reportedBugs' });
+    Users.hasMany(models.Bugs, { foreignKey: 'assignedToUser', as: 'assignedBugs' });
   };
 
   return Users
