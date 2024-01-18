@@ -42,7 +42,7 @@ const ProjectListMP = () => {
 
   const handleProjectClick = (projectId) => {
 
-    navigate(`/mp/bugs/${projectId}`)
+    navigate(`/tst/bugs/${projectId}`)
   };
 
   const handleProjectDialogHide = () => {
