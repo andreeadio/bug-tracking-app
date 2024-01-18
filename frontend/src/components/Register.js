@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import UserContext from './UserContext';
 
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +11,13 @@ const RegisterForm = () => {
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const userContext = useContext(UserContext);
+
+    if (!userContext) {
+        throw new Error("useContext(UserContext) is null. Make sure UserContext is properly set up.");
+    }
+
+    const { setUser, userID } = userContext;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -45,6 +52,10 @@ const RegisterForm = () => {
 
             if (response.ok) {
                 console.log('User registered:', data);
+                setUser(data);
+                const { userID } = data;
+                // console.log('reguserid: ' + userID);
+
                 navigate('/chosemembership');
             } else {
                 setError(data.message || "Failed to register");
