@@ -3,6 +3,8 @@ import "primereact/resources/primereact.min.css" //core css
 import { Button } from 'primereact/button'
 import { Tag } from "primereact/tag"
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
+
 import axios from 'axios'
 //import './BugList.css'; // Import the CSS file
 import { SERVER } from '../../config/global'
@@ -14,13 +16,14 @@ import BugDataTable from "./BugDataTable"
 
 
 const BugList = () => {
+    const { projectID } = useParams();
     const [bugs, setBugs] = useState([]);
     const [dialogVisible, setDialogVisible] = useState(false);
 
     // Fetch the list of bugs from your server
     const fetchBugs = async () => {
         try {
-            const response = await axios.get(`${SERVER}/bugs`);
+            const response = await axios.get(`${SERVER}/bugs/byProject/${projectID}`);
             setBugs(response.data);
         } catch (error) {
             console.error('Error fetching bugs:', error);
@@ -29,7 +32,7 @@ const BugList = () => {
 
     useEffect(() => {
         fetchBugs();
-    }, []); // Empty dependency array ensures that this effect runs once on component mount
+    }, [projectID]); // Empty dependency array ensures that this effect runs once on component mount
 
     const handleDeleteBug = async (bugID) => {
 
@@ -72,16 +75,6 @@ const BugList = () => {
         <div className="bug-list-container" style={{ padding: "80px", display: 'grid' }}>
             <h1>Project Dashboard</h1>
 
-            <Button label="Add New Bug" onClick={() => setDialogVisible(true)} />
-
-            <BugDialog
-                visible={dialogVisible}
-                onHide={() => setDialogVisible(false)}
-                onBugAdded={() => {
-                    setDialogVisible(false);
-                    fetchBugs(); // Fetch updated bugs after adding a new bug
-                }}
-            />
 
             <BugDataTable bugs={bugs} onDelete={handleDeleteBug} statusBodyTemplate={statusBodyTemplate} />
         </div>
