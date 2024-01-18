@@ -69,9 +69,7 @@ const ProjectListMP = () => {
       <div>
         <strong>Team Name:</strong> {project.teamName}
       </div>
-      <div>
-        <strong>Repository Name:</strong> {project.repositoryName}
-      </div>
+
     </Card>
   );
 
