@@ -45,6 +45,9 @@ const BugList = () => {
         fetchBugs();
     }, [projectID]); // Empty dependency array ensures that this effect runs once on component mount
 
+    const handleUpdateBug = async () => {
+        await fetchBugs(); // Fetch updated data
+    };
     const handleDeleteBug = async (bugID) => {
 
         try {
@@ -87,7 +90,7 @@ const BugList = () => {
             <h1>Project Dashboard</h1>
 
 
-            <BugDataTable bugs={bugs} onDelete={handleDeleteBug} statusBodyTemplate={statusBodyTemplate} />
+            <BugDataTable bugs={bugs} onDelete={handleDeleteBug} statusBodyTemplate={statusBodyTemplate} onUpdate={handleUpdateBug} />
         </div>
     );
 };

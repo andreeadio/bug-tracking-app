@@ -1,12 +1,26 @@
 import React from 'react';
 
-
+import BugEditForm from './BugEditForm'
 import { DataTable } from 'primereact/datatable';
+import { Dialog } from 'primereact/dialog';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import { useState, useContext } from "react";
 
-const BugDataTable = ({ bugs, onEdit, onDelete, statusBodyTemplate, hideActionsColumn }) => {
+const BugDataTable = ({ bugs, onEdit, onDelete, statusBodyTemplate, hideActionsColumn, onUpdate }) => {
 
+    const [selectedBug, setSelectedBug] = useState(null);
+    const [displayEditDialog, setDisplayEditDialog] = useState(false);
+
+    const onEditClick = (rowData) => {
+        setSelectedBug(rowData);
+        setDisplayEditDialog(true);
+    };
+
+    const onHideEditDialog = () => {
+        setDisplayEditDialog(false);
+        setSelectedBug(null);
+    };
 
     //datatable for bugs, can be sorted by id, severity or priority
     return (
@@ -32,7 +46,7 @@ const BugDataTable = ({ bugs, onEdit, onDelete, statusBodyTemplate, hideActionsC
                                 <Button
                                     icon="pi pi-pencil"
                                     className="p-button-rounded p-button-success"
-                                    onClick={() => onEdit(rowData)}
+                                    onClick={() => onEditClick(rowData)}
                                 />
                                 {/* Delete Button */}
                                 <Button
@@ -45,6 +59,16 @@ const BugDataTable = ({ bugs, onEdit, onDelete, statusBodyTemplate, hideActionsC
                     />
                 )}
             </DataTable>
+
+            <Dialog
+                header="Edit Bug"
+                visible={displayEditDialog}
+                onHide={onHideEditDialog}
+                modal
+                style={{ width: '50vw' }}
+            >
+                <BugEditForm bug={selectedBug} onClose={onHideEditDialog} onUpdate={onUpdate} />
+            </Dialog>
         </div>
     );
 

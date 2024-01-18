@@ -2,7 +2,7 @@ import "primereact/resources/themes/lara-dark-pink/theme.css" //theme
 import "primereact/resources/primereact.min.css" //core css
 
 import UserContext from '../UserContext'
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { SERVER } from '../../config/global';
 
@@ -20,15 +20,17 @@ import { Dropdown } from 'primereact/dropdown';
 const BugEditForm = ({ bug, onClose, onUpdate }) => {
 
     const [editedBug, setEditedBug] = useState({ ...bug });
+    const [selectedStatus, setSelectedStatus] = useState(editedBug.status);
 
-
+    useEffect(() => {
+        // Update editedBug state when bug prop changes
+        setEditedBug({ ...bug });
+    }, [bug]);
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        setBug((prevBug) => ({ ...prevBug, [name]: value }))
+        setEditedBug((prevBug) => ({ ...prevBug, [name]: value }))
     }
-
-
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -52,7 +54,12 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
         setSelectedStatus(e.value);
         setEditedBug((prevBug) => ({ ...prevBug, status: e.value }));
     };
-
+    const statusOptions = [
+        { label: 'Verified', value: 'Verified' },
+        { label: 'In Progress', value: 'In Progress' },
+        { label: 'Implemented', value: 'Implemented' },
+        { label: 'Open', value: 'Open' },
+    ];
     const priorityOptions = [
         { label: 'Low', value: 'Low' },
         { label: 'Medium', value: 'Medium' },
@@ -63,13 +70,13 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
     return (
         <div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleUpdate}>
 
                 <div className="p-fluid">
 
                     <div className="p-field">
                         <label htmlFor="title">Title</label>
-                        <InputText id="title" name="title" value={bug.title} onChange={handleChange}
+                        <InputText id="title" name="title" value={editedBug.title} onChange={handleChange}
                             disabled
                         />
                     </div>
@@ -79,7 +86,7 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
                         <InputTextarea
                             id="description"
                             name="description"
-                            value={bug.description}
+                            value={editedBug.description}
                             onChange={handleChange}
                             disabled
                         />
@@ -88,7 +95,7 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
                     <div className="p-field">
                         <label>Severity</label>
                         <ToggleButton
-                            checked={bug.severity}
+                            checked={editedBug.severity}
                             disabled
                         />
                     </div>
@@ -96,7 +103,7 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
                     <div className="p-field">
                         <label>Priority</label>
                         <Dropdown
-                            value={bug.priority}
+                            value={editedBug.priority}
                             options={priorityOptions}
                             placeholder="Select Priority"
                             disabled
@@ -117,14 +124,14 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
                         <InputText
                             id="commitLink"
                             name="commitLink"
-                            value={bug.commitLink}
+                            value={editedBug.commitLink}
                             onChange={handleChange}
                         />
                     </div>
                     <div className="p-field">
-                        <label htmlFor="assignedToUser">Title</label>
-                        <InputText id="assignedToUser" name="assignedToUser" value={bug.assignedToUser} onChange={handleChange}
-                            disabled
+                        <label htmlFor="assignedToUser">Assign to user</label>
+                        <InputText id="assignedToUser" name="assignedToUser" value={editedBug.assignedToUser} onChange={handleChange}
+
                         />
                     </div>
                 </div>

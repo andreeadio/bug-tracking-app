@@ -115,5 +115,29 @@ router.get('/byProject/:projectID', async (req, res) => {
 });
 
 //TODO: PUT
+router.put('/:id', async (req, res) => {
+    const bugId = req.params.id;
+    const updatedBug = req.body;
+
+    try {
+        const existingBug = await Bugs.findByPk(bugId);
+        if (!existingBug) {
+            return res.status(404).json({ message: 'Bug not found' });
+        }
+
+        // Update the bug in the database
+        await Bugs.update(updatedBug, {
+            where: {
+                bugID: bugId,
+            },
+        });
+
+        return res.status(200).json({ message: 'Bug updated!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
 
 module.exports = router
