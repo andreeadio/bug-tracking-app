@@ -14,18 +14,24 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique:true,
+      unique: true,
     },
     role: {
-      type: DataTypes.ENUM('MP', 'TST','BASIC'),
+      type: DataTypes.ENUM('MP', 'TST', 'BASIC'),
       allowNull: true,
-      defaultValue:'BASIC'
+      defaultValue: 'BASIC'
     },
     password: {
       type: DataTypes.STRING,
       allowNull: true,
     }
-   
+
   });
+
+  Users.associate = function (models) {
+    Users.hasMany(models.Bugs, { foreignKey: 'reportedByUserID', as: 'reportedBugs' });
+    Users.hasMany(models.Bugs, { foreignKey: 'assignedToUserID', as: 'assignedBugs' });
+  };
+
   return Users
 };

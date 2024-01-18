@@ -18,20 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING, // Add a field for team name
       allowNull: false,
     }
-    // teamID: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    //   references: {
-    //     model: 'Teams', // This is a reference to another model
-    //     key: 'teamID', // This is the column name of the referenced model
-    //   }
-    // }
+
   });
 
-  // Projects.associate = function(models) {
-  //   // associations can be defined here
-  //   Projects.belongsTo(models.Teams, {foreignKey: 'teamID', as: 'team'});
-  // };
+  Projects.associate = function (models) {
+
+    Projects.hasMany(models.Bugs, { foreignKey: 'projectID', as: 'bugs' });
+  };
 
   return Projects;
 };
