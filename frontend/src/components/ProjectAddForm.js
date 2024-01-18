@@ -52,7 +52,6 @@ const ProjectAddForm = ({ onProjectAdded }) => {
                         <InputText
                             id="projectName"
                             name="projectName"
-                            placeholder="Project Name"
                             value={project.projectName}
                             onChange={handleChange}
                             require
@@ -75,7 +74,6 @@ const ProjectAddForm = ({ onProjectAdded }) => {
                         <InputText
                             id="teamName"
                             name="teamName"
-                            placeholder="Team Name"
                             value={project.teamName}
                             onChange={handleChange}
                             required

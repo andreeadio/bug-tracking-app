@@ -4,7 +4,7 @@ import { Dialog } from 'primereact/dialog';
 import BugAddForm from "./BugAddForm";
 //dialog
 //pop up dialog which opens a form for adding a new bug (the form is in BugAddForm)
-const BugDialog = ({ visible, onHide, onBugAdded }) => {
+const BugDialog = ({ visible, onHide, onBugAdded, projectID }) => {
     return (
         <Dialog
             header="Add New Bug"
@@ -13,7 +13,7 @@ const BugDialog = ({ visible, onHide, onBugAdded }) => {
             style={{ width: '50vw' }}
             draggable={false}
         >
-            <BugAddForm onBugAdded={onBugAdded} />
+            <BugAddForm onBugAdded={onBugAdded} projectID={projectID} />
         </Dialog>
     );
 };

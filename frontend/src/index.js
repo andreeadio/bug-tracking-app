@@ -2,37 +2,54 @@ import "primereact/resources/themes/lara-dark-pink/theme.css" //theme
 import "primereact/resources/primereact.min.css" //core css
 import 'primeicons/primeicons.css'; //import icons
 
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import BugPage from './components/Bugs/BugPage'
+import BugPageMP from './components/Bugs/BugPageMP'
+import BugPageTST from './components/Bugs/BugPageTST'
+
+import WelcomePage from './components/WelcomePage'
 import LoginForm from './components/LoginForm';
 import BugDataTable from './components/Bugs/BugDataTable';
 import Register from './components/Register';
-import MemberProjectPage from "./components/MemberProjectPage";
+import ProjectListMP from "./components/ProjectListMP";
 import TesterProjectPage from "./components/TesterProjectPage";
 import ChoseMembership from "./components/ChoseMembership";
+import UserContext from './components/UserContext';
 import {
+  BrowserRouter as Router,
   createBrowserRouter, RouterProvider,
 } from 'react-router-dom';
+import ProjectListTST from "./components/ProjectListTST";
+
+
+
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginForm />
+    element: <WelcomePage />
   },
   {
-    path: "/bugs",
-    element: <BugPage />
+    path: "/mp/bugs/:projectID",
+    element: <BugPageMP />
+  },
+  {
+    path: "/tst/bugs/:projectID",
+    element: <BugPageTST />
   },
   {
     path: "/register",
     element: <Register />
   },
   {
-    path: "/projectsMember",
-    element: <MemberProjectPage />
+    path: "/mp/listProjects",
+    element: <ProjectListMP />
+  },
+  {
+    path: "/tst/listProjects",
+    element: <ProjectListTST />
   },
   {
     path: "/projectsTester",
@@ -46,8 +63,20 @@ const router = createBrowserRouter([
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+
+const RootComponent = () => {
+  const [user, setUser] = useState({});
+
+  return (
+    <React.StrictMode>
+      <RouterProvider router={router}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Router>
+            <App />
+          </Router>
+        </UserContext.Provider>
+      </RouterProvider>
+    </React.StrictMode>
+  );
+};
+root.render(<RootComponent />);

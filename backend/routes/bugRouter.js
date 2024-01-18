@@ -2,13 +2,20 @@ const express = require('express')
 const router = express.Router()
 
 const { Bugs } = require('../models')
+//const { verifyToken } = require('../middleware/authMiddleware');
 
+
+// POST endpoint for adding a bug
 //GET the list of bugs
 router.get('/', async (req, res) => {
 
-    //res.send("List of Bugs!")
-    const listOfBugs = await Bugs.findAll()
-    res.status(200).json(listOfBugs)
+    try {
+        const listOfBugs = await Bugs.findAll();
+        res.status(200).json(listOfBugs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 })
 
 //GET http://localhost:8080/bugs/1
@@ -32,12 +39,15 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const bug = req.body
+        //const reportedByUserID = req.decodedToken.id;
+
         //validation
         if (!bug || !bug.title || !bug.description) {
             return res.status(400).json({ message: 'Invalid request' })
         }
 
         //add the new bug to the database
+        //await Bugs.create(...bug, reportedByUserID)
         await Bugs.create(bug)
         res.status(201).json({ message: 'Bug created!' })
     } catch (error) {
@@ -69,6 +79,40 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' })
     }
 })
+
+// GET bugs reported by a specific user
+router.get('/reportedByUser/:reportedByUserID', async (req, res) => {
+    const reportedByUserID = req.params.reportedByUserID;
+
+    try {
+        const bugsReportedByUser = await Bugs.findAll({
+            where: {
+                reportedByUserID: reportedByUserID,
+            },
+        });
+
+        res.status(200).json(bugsReportedByUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+router.get('/byProject/:projectID', async (req, res) => {
+    const projectID = req.params.projectID;
+
+    try {
+        const bugsInProject = await Bugs.findAll({
+            where: {
+                projectID: projectID,
+            },
+        });
+
+        res.status(200).json(bugsInProject);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 //TODO: PUT
 

@@ -1,8 +1,11 @@
-import jwt from 'jsonwebtoken';
-import { JWT_KEY } from '../config/const.js';
+
+const jwt = require('jsonwebtoken');
+
+const { JWT_KEY } = require('../config/const.js');
+
 
 // Common token verification function
-export const verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         return res.status(401).json('Authorization header not provided');
@@ -23,7 +26,7 @@ export const verifyToken = (req, res, next) => {
 };
 
 // Verify if the token belongs to a team member ('MP')
-export const verifyTeamMember = (req, res, next) => {
+const verifyTeamMember = (req, res, next) => {
     verifyToken(req, res, () => {
         if (req.decodedToken.role === 'MP') {
             next();
@@ -34,7 +37,7 @@ export const verifyTeamMember = (req, res, next) => {
 };
 
 // Verify if the token belongs to a tester ('TST')
-export const verifyTester = (req, res, next) => {
+const verifyTester = (req, res, next) => {
     verifyToken(req, res, () => {
         if (req.decodedToken.role === 'TST') {
             next();
@@ -42,4 +45,10 @@ export const verifyTester = (req, res, next) => {
             return res.status(403).json('Forbidden: Only testers are allowed');
         }
     });
+};
+
+module.exports = {
+    verifyToken,
+    verifyTeamMember,
+    verifyTester,
 };

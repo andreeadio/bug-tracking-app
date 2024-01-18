@@ -17,62 +17,40 @@ import { Dropdown } from 'primereact/dropdown';
 
 
 //form for adding a bug
-const BugAddForm = ({ onBugAdded, projectID }) => {
+const BugEditForm = ({ bug, onClose, onUpdate }) => {
 
-    //get the user info
+    const [editedBug, setEditedBug] = useState({ ...bug });
 
 
-    const [bug, setBug] = useState(
-        //bug details
-        {
-            title: '',
-            description: '',
-            severity: false,
-            priority: 'Medium',
-            commitLink: '',
-            projectID: `${projectID}`,
-
-        }
-    )
 
     const handleChange = (e) => {
         const { name, value } = e.target
         setBug((prevBug) => ({ ...prevBug, [name]: value }))
     }
 
-    const handleToggle = () => {
-        setBug((prevBug) => ({ ...prevBug, severity: !prevBug.severity }))
-    }
 
-    const handleSubmit = async (e) => {
+
+    const handleUpdate = async (e) => {
         e.preventDefault();
 
         try {
-            //make the post request
-            await axios.post(`${SERVER}/bugs`, bug);
-            // Assuming the API call is successful, reset the form and notify the parent component
-            setBug({
-                title: '',
-                description: '',
-                severity: false,
-                priority: 'Medium',
-                commitLink: '',
-                projectID: `${projectID}`,
+            //make the put request
+            await axios.put(`${SERVER}/bugs/${editedBug.bugID}`, editedBug);
 
-            });
-            onBugAdded();
+            onUpdate();
+            onClose();
 
             //display message
-            window.alert('Bug successfully added!');
+            window.alert('Bug successfully updated!');
         } catch (error) {
             console.error('Error adding bug:', error);
             window.alert('Error when adding a bug');
 
         }
     }
-
-    const handlePriorityChange = (e) => {
-        setBug({ ...bug, priority: e.value });
+    const handleStatusChange = (e) => {
+        setSelectedStatus(e.value);
+        setEditedBug((prevBug) => ({ ...prevBug, status: e.value }));
     };
 
     const priorityOptions = [
@@ -82,7 +60,6 @@ const BugAddForm = ({ onBugAdded, projectID }) => {
     ];
 
 
-    //
     return (
         <div>
 
@@ -93,7 +70,7 @@ const BugAddForm = ({ onBugAdded, projectID }) => {
                     <div className="p-field">
                         <label htmlFor="title">Title</label>
                         <InputText id="title" name="title" value={bug.title} onChange={handleChange}
-                            required
+                            disabled
                         />
                     </div>
 
@@ -104,7 +81,7 @@ const BugAddForm = ({ onBugAdded, projectID }) => {
                             name="description"
                             value={bug.description}
                             onChange={handleChange}
-                            required
+                            disabled
                         />
                     </div>
 
@@ -112,7 +89,7 @@ const BugAddForm = ({ onBugAdded, projectID }) => {
                         <label>Severity</label>
                         <ToggleButton
                             checked={bug.severity}
-                            onChange={handleToggle}
+                            disabled
                         />
                     </div>
 
@@ -121,8 +98,17 @@ const BugAddForm = ({ onBugAdded, projectID }) => {
                         <Dropdown
                             value={bug.priority}
                             options={priorityOptions}
-                            onChange={handlePriorityChange}
                             placeholder="Select Priority"
+                            disabled
+                        />
+                    </div>
+                    <div className="p-field">
+                        <label>Status</label>
+                        <Dropdown
+                            value={selectedStatus}
+                            options={statusOptions}
+                            placeholder="Select Status"
+                            onChange={handleStatusChange}
                         />
                     </div>
 
@@ -135,9 +121,17 @@ const BugAddForm = ({ onBugAdded, projectID }) => {
                             onChange={handleChange}
                         />
                     </div>
+                    <div className="p-field">
+                        <label htmlFor="assignedToUser">Title</label>
+                        <InputText id="assignedToUser" name="assignedToUser" value={bug.assignedToUser} onChange={handleChange}
+                            disabled
+                        />
+                    </div>
                 </div>
 
-                <Button type="submit" label="Submit" onClick={handleSubmit} />
+                <Button type="button" label="Update" onClick={handleUpdate} />
+                <Button type="button" label="Cancel" onClick={onClose} className="p-button-secondary" />
+
             </form>
         </div>
     )
@@ -145,4 +139,4 @@ const BugAddForm = ({ onBugAdded, projectID }) => {
 }
 
 
-export default BugAddForm
+export default BugEditForm
