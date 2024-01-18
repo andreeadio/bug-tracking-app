@@ -82,7 +82,7 @@ const ProjectListMP = () => {
           <i className="pi pi-search"></i>
         </span>
         <InputText
-          placeholder="Search projects..."
+          placeholder="Search projects by repository..."
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
