@@ -21,6 +21,8 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
 
     const [editedBug, setEditedBug] = useState({ ...bug });
     const [selectedStatus, setSelectedStatus] = useState(editedBug.status);
+    //const [assignedUserId, setAssignedUserId] = useState(null);
+    //const [username, setUsername] = useState('');
 
     useEffect(() => {
         // Update editedBug state when bug prop changes
@@ -31,6 +33,35 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
         const { name, value } = e.target
         setEditedBug((prevBug) => ({ ...prevBug, [name]: value }))
     }
+    // const handleChangeUsername = (e) => {
+
+    //     setUsername(e.value)
+    // }
+    // const handleVerifyAssignedUser = async () => {
+
+
+    //     try {
+    //         // Make a request to the server to get the user by username
+    //         const response = await axios.get(`${SERVER}/users/username/${username}`);
+    //         const user = response.data;
+
+    //         // Check if the user is found
+    //         if (user) {
+    //             const userId = user.userId;
+
+    //             // Update the state
+    //             setAssignedUserId(userId);
+    //             setEditedBug((prevBug) => ({ ...prevBug, assignedToUser: userId }));
+    //         } else {
+    //             // If the user is not found, clear the assignedUserId and assignedToUser
+    //             setAssignedUserId(null);
+    //             setEditedBug((prevBug) => ({ ...prevBug, assignedToUser: '' }));
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching user:', error);
+    //     }
+    // };
+
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -128,12 +159,7 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
                             onChange={handleChange}
                         />
                     </div>
-                    <div className="p-field">
-                        <label htmlFor="assignedToUser">Assign to user</label>
-                        <InputText id="assignedToUser" name="assignedToUser" value={editedBug.assignedToUser} onChange={handleChange}
 
-                        />
-                    </div>
                 </div>
 
                 <Button type="button" label="Update" onClick={handleUpdate} />
@@ -147,3 +173,10 @@ const BugEditForm = ({ bug, onClose, onUpdate }) => {
 
 
 export default BugEditForm
+
+// <div className="p-field">
+// <label htmlFor="assignedToUser">Assign to user</label>
+// <InputText id="assignedToUser" name="assignedToUser" value={username} onChange={handleChangeUsername}
+// />
+// <Button label="Verify" icon="pi pi-check" onClick={handleVerifyAssignedUser} />
+// </div>

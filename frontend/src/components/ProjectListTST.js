@@ -57,7 +57,7 @@ const ProjectListMP = () => {
   const projectTemplate = (project) => (
     <Card
       title={project.projectName}
-      style={{ width: '300px', margin: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}
+      style={{ width: '90%', margin: '20px 10px 10px 10p', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}
       onClick={() => handleProjectClick(project.projectID)}
     >
       <div>

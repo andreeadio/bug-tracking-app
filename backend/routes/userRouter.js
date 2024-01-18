@@ -110,4 +110,20 @@ router.delete('/:userId', async (req, res) => {
   }
 });
 
+// Get a specific user by username
+router.get('/username/:username', async (req, res) => {
+  const username = req.params.username;
+  try {
+    const user = await Users.findOne({ where: { username: username } });
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 module.exports = router;
